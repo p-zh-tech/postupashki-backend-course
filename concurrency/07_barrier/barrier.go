@@ -22,7 +22,6 @@ func New(n int) *Barrier {
 }
 
 func (b *Barrier) Wait() {
-
 	myRound := atomic.LoadUint32(&b.round)
 
 	arrived := atomic.AddUint32(&b.arrived, 1)
