@@ -47,6 +47,7 @@ func (m *Mutex) Unlock() {
 		return
 
 	default:
+		// Защитная проверка: при корректной работе Mutex это состояние недостижимо.
 		panic("invalid mutex state")
 	}
 }
