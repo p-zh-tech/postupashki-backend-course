@@ -13,7 +13,11 @@ func (wg *WaitGroup) Add(delta int) {
 	for {
 		old := atomic.LoadUint32(&wg.count)
 
-		if delta < 0 && uint32(-delta) > old {
+		if delta > 0 && uint64(delta) > uint64(^uint32(0)-old) {
+			panic("WaitGroup counter overflow")
+		}
+
+		if delta < 0 && uint64(-delta) > uint64(old) {
 			panic("negative WaitGroup counter")
 		}
 
